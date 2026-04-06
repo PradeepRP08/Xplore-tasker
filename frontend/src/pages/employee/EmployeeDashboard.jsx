@@ -171,15 +171,43 @@ export default function EmployeeDashboard() {
             ) : pieData.length === 0 ? (
               <div className="h-44 flex items-center justify-center text-white/30 text-sm">No task data yet</div>
             ) : (
-              <ResponsiveContainer width="100%" height={180}>
+              <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
-                  <Pie data={pieData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={4} dataKey="value">
+                  <Pie 
+                    data={pieData} 
+                    cx="50%" 
+                    cy="45%" 
+                    innerRadius={35} 
+                    outerRadius={55} 
+                    paddingAngle={4} 
+                    dataKey="value"
+                    labelLine={{ stroke: 'rgba(255,255,255,0.3)' }}
+                    label={({ name, value }) => ({
+                      text: `${name}: ${value}`,
+                      fill: '#ffffff',
+                      fontSize: 11,
+                      fontWeight: 'bold',
+                    })}
+                  >
                     {pieData.map((entry, i) => (
-                      <Cell key={i} fill={entry.color} stroke="transparent" />
+                      <Cell key={i} fill={entry.color} stroke="rgba(255,255,255,0.1)" strokeWidth={1} />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={{ background: '#0a0a25', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 4px 20px rgba(0,0,0,0.5)', color: 'white', fontSize: '12px' }} />
-                  <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }} />
+                  <Tooltip
+                    contentStyle={{
+                      background: 'rgba(10,10,26,0.95)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(0,245,255,0.3)',
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                      color: 'white',
+                      fontSize: '12px',
+                      padding: '6px 12px',
+                    }}
+                    itemStyle={{ color: '#fff' }}
+                    labelStyle={{ color: '#fff' }}
+                    wrapperStyle={{ zIndex: 100 }}
+                  />
+                  <Legend iconType="circle" iconSize={7} wrapperStyle={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', paddingTop: '4px' }} />
                 </PieChart>
               </ResponsiveContainer>
             )}

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { Users, UserCheck, ClipboardList, CheckCircle2, Clock, Loader2, TrendingUp } from 'lucide-react';
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, LabelList,
 } from 'recharts';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
@@ -27,7 +27,7 @@ export default function AdminDashboard() {
     { name: 'Pending',     value: stats.pendingTasks,    color: '#f59e0b' },
     { name: 'In Progress', value: stats.inProgressTasks, color: '#3b82f6' },
     { name: 'Completed',   value: stats.completedTasks,  color: '#10b981' },
-  ] : [];
+  ].filter(d => d.value > 0) : [];
 
   const barData = stats ? [
     { label: 'Total',      value: stats.totalEmployees,    fill: '#6471f1' },
@@ -122,25 +122,41 @@ export default function AdminDashboard() {
           ) : (
             <ResponsiveContainer width="100%" height={280}>
               <PieChart>
-                <defs>
-                  <linearGradient id="taskGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#00f5ff" />
-                    <stop offset="50%" stopColor="#ff00ff" />
-                    <stop offset="100%" stopColor="#0ff0a0" />
-                  </linearGradient>
-                </defs>
-                <Pie data={pieData} cx="55%" cy="50%" innerRadius={60} outerRadius={95} paddingAngle={5} dataKey="value">
+                <Pie 
+                  data={pieData} 
+                  cx="50%" 
+                  cy="50%" 
+                  innerRadius={50} 
+                  outerRadius={80} 
+                  paddingAngle={4} 
+                  dataKey="value" 
+                  labelLine={{ stroke: 'rgba(255,255,255,0.3)', strokeWidth: 1 }}
+                  label={({ name, value, percent }) => ({
+                    text: `${name}: ${value} (${(percent * 100).toFixed(0)}%)`,
+                    fill: '#ffffff',
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                  })}
+                >
                   {pieData.map((entry, i) => (
-                    <Cell key={i} fill={`url(#taskGradient)`} strokeWidth={3} stroke="rgba(255,255,255,0.2)" />
+                    <Cell key={i} fill={entry.color} strokeWidth={2} stroke="rgba(255,255,255,0.15)" />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{
-                  background: 'rgba(10,10,26,0.95)',
-                  border: '1px solid rgba(0,245,255,0.3)',
-                  borderRadius: '16px',
-                  backdropFilter: 'blur(20px)',
-                  color: 'white'
-                }} />
+                <Tooltip
+                  contentStyle={{
+                    background: 'rgba(10,10,26,0.95)',
+                    border: '1px solid rgba(0,245,255,0.3)',
+                    borderRadius: '12px',
+                    backdropFilter: 'blur(20px)',
+                    color: 'white',
+                    fontSize: '13px',
+                    padding: '8px 14px',
+                  }}
+                  itemStyle={{ color: '#fff' }}
+                  labelStyle={{ color: '#fff' }}
+                  wrapperStyle={{ zIndex: 100 }}
+                />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', paddingTop: '8px' }} />
               </PieChart>
             </ResponsiveContainer>
           )}
@@ -159,15 +175,30 @@ export default function AdminDashboard() {
           </div>
           {loading ? <div className="h-56 flex items-center justify-center"><div className="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin" /></div> : (
             <ResponsiveContainer width="100%" height={220}>
-              <BarChart data={barData} barSize={36}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <BarChart data={barData} barSize={36} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" fill="none" vertical={false} />
                 <XAxis dataKey="label" tick={{ fontSize: 12, fill: 'rgba(255,255,255,0.5)' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 12, fill: 'rgba(255,255,255,0.5)' }} axisLine={false} tickLine={false} allowDecimals={false} />
-                <Tooltip contentStyle={{ background: '#0a0a25', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 4px 20px rgba(0,0,0,0.5)', color: 'white' }} />
+                <Tooltip
+                  contentStyle={{
+                    background: 'rgba(10,10,26,0.95)',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(0,245,255,0.3)',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                    color: 'white',
+                    fontSize: '13px',
+                    padding: '8px 14px',
+                  }}
+                  itemStyle={{ color: '#fff' }}
+                  labelStyle={{ color: '#fff' }}
+                  cursor={{ fill: 'rgba(255,255,255,0.03)' }}
+                  wrapperStyle={{ zIndex: 100 }}
+                />
                 <Bar dataKey="value" radius={[8, 8, 0, 0]}>
                   {barData.map((entry, i) => (
                     <Cell key={i} fill={entry.fill} />
                   ))}
+                  <LabelList dataKey="value" position="top" fill="#ffffff" fontSize={13} fontWeight="bold" offset={10} />
                 </Bar>
               </BarChart>
             </ResponsiveContainer>

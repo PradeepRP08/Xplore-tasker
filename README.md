@@ -18,70 +18,16 @@ A full-stack MERN application with a premium, modern UI featuring two portals: *
 
 ---
 
-## 📁 Folder Structure
+Admin 
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
 
-```
-taskflow/
-├── backend/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   ├── adminController.js
-│   │   └── employeeController.js
-│   ├── middleware/
-│   │   └── auth.js
-│   ├── models/
-│   │   ├── Admin.js
-│   │   ├── Employee.js
-│   │   └── Task.js
-│   ├── routes/
-│   │   ├── adminRoutes.js
-│   │   └── employeeRoutes.js
-│   ├── .env
-│   ├── .env.example
-│   ├── package.json
-│   ├── seed.js
-│   └── server.js
-│
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   │   └── shared/
-    │   │       ├── Loader.jsx
-    │   │       ├── Sidebar.jsx
-    │   │       ├── StatCard.jsx
-    │   │       └── StatusBadge.jsx
-    │   ├── context/
-    │   │   └── AuthContext.jsx
-    │   ├── pages/
-    │   │   ├── auth/
-    │   │   │   ├── AdminLogin.jsx
-    │   │   │   ├── EmployeeLogin.jsx
-    │   │   │   └── EmployeeRegister.jsx
-    │   │   ├── admin/
-    │   │   │   ├── AdminDashboard.jsx
-    │   │   │   ├── AdminLayout.jsx
-    │   │   │   ├── AssignTask.jsx
-    │   │   │   ├── EmployeeManagement.jsx
-    │   │   │   └── TaskManagement.jsx
-    │   │   ├── employee/
-    │   │   │   ├── EmployeeDashboard.jsx
-    │   │   │   ├── EmployeeLayout.jsx
-    │   │   │   └── MyTasks.jsx
-    │   │   └── Landing.jsx
-    │   ├── utils/
-    │   │   └── api.js
-    │   ├── App.jsx
-    │   ├── index.css
-    │   └── main.jsx
-    ├── index.html
-    ├── package.json
-    ├── postcss.config.js
-    ├── tailwind.config.js
-    └── vite.config.js
-```
-
----
+user 
+![alt text](image-5.png)
+![alt text](image-6.png)
 
 ## ⚙️ Prerequisites
 
